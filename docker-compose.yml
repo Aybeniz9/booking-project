@@ -1,0 +1,27 @@
+version: '3.3'
+
+services:
+  db_postgres:
+    container_name: db_postgres
+    image: postgres
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Aybeniz2021
+
+  turing-booking-project:
+    container_name: turing-booking-project
+    image: turing-booking-project
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - db_postgres
+    network_mode: "host"
+    tty: true
+    stdin_open: true
